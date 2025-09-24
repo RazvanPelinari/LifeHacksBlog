@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 
+import authRoutes from "./routes/auth.js";
+
 dotenv.config();
 
 const app = express();
@@ -11,7 +13,7 @@ app.use(express.json());
 
 // MongoDB connection
 mongoose
-  .connect(process.env.MONGO_URI) // clean, no deprecated options
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.error(err));
 
@@ -22,7 +24,6 @@ const postSchema = new mongoose.Schema({
   category: String,
   content: String,
 });
-
 const Post = mongoose.model("Post", postSchema);
 
 // Routes
@@ -37,18 +38,9 @@ app.post("/posts", async (req, res) => {
   res.json(newPost);
 });
 
-app.get("/posts/:id", async (req, res) => {
-  try {
-    const post = await Post.findById(req.params.id);
-    if (!post) {
-      return res.status(404).json({ message: "Post not found" });
-    }
-    res.json(post);
-  } catch (err) {
-    res.status(400).json({ message: "Invalid ID" });
-  }
-});
+// Auth routes
+app.use("/auth", authRoutes);
 
-// Use Railway-provided port or default to 5000
+// Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

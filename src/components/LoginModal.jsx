@@ -2,21 +2,19 @@ import React, { useState } from "react";
 
 const backendURL = "https://lifehacksblog-production.up.railway.app";
 
-function LoginModal({ onClose, setUser, openSignup }) {
+export default function LoginModal({ onClose, setUser, switchToSignup }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
     try {
-      const res = await fetch(`${backendURL}/login`, {
+      const res = await fetch(`${backendURL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
+
       const data = await res.json();
 
       if (res.ok) {
@@ -29,64 +27,58 @@ function LoginModal({ onClose, setUser, openSignup }) {
     } catch (err) {
       console.error(err);
       alert("Login error");
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-      <div className="backdrop-blur-lg bg-white/20 border border-white/30 rounded-xl p-8 max-w-md w-full relative shadow-lg">
-        <h2 className="text-2xl font-bold mb-4 text-white">Login</h2>
-        <form className="space-y-4 text-white" onSubmit={handleLogin}>
+      <div className="relative bg-white/20 backdrop-blur-md border border-white/30 rounded-xl p-8 max-w-md w-full shadow-lg">
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-white hover:text-gray-200 text-xl"
+        >
+          ✕
+        </button>
+
+        <h2 className="text-2xl font-bold mb-6 text-white text-center">
+          Login
+        </h2>
+
+        <form className="space-y-4" onSubmit={handleLogin}>
           <input
-            type="email"
+            className="w-full p-2 rounded bg-white/10 text-white placeholder-white/70 border border-white/40"
             placeholder="Email"
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-white/40 rounded p-2 bg-white/10 text-white placeholder-white/70"
             required
           />
           <input
-            type="password"
+            className="w-full p-2 rounded bg-white/10 text-white placeholder-white/70 border border-white/40"
             placeholder="Password"
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-white/40 rounded p-2 bg-white/10 text-white placeholder-white/70"
             required
           />
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition font-medium"
-            disabled={loading}
+            className="w-full py-2 bg-blue-600 hover:bg-blue-700 transition text-white rounded font-medium"
           >
-            {loading ? "Logging in..." : "Login"}
+            Login
           </button>
         </form>
 
-        {/* New here link */}
         <p className="mt-4 text-center text-white/80">
           New here?{" "}
           <span
-            onClick={() => {
-              onClose();
-              openSignup();
-            }}
+            onClick={switchToSignup}
             className="text-blue-400 hover:underline cursor-pointer"
           >
             Create an account
           </span>
         </p>
-
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 text-white/80 hover:text-white text-xl font-bold"
-        >
-          ✕
-        </button>
       </div>
     </div>
   );
 }
-
-export default LoginModal;

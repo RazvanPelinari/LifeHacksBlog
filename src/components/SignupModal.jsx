@@ -2,22 +2,20 @@ import React, { useState } from "react";
 
 const backendURL = "https://lifehacksblog-production.up.railway.app";
 
-function SignupModal({ onClose, setUser, openLogin }) {
+export default function SignupModal({ onClose, setUser, switchToLogin }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
     try {
-      const res = await fetch(`${backendURL}/signup`, {
+      const res = await fetch(`${backendURL}/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),
       });
+
       const data = await res.json();
 
       if (res.ok) {
@@ -30,72 +28,65 @@ function SignupModal({ onClose, setUser, openLogin }) {
     } catch (err) {
       console.error(err);
       alert("Signup error");
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-      <div className="backdrop-blur-lg bg-white/20 border border-white/30 rounded-xl p-8 max-w-md w-full relative shadow-lg">
-        <h2 className="text-2xl font-bold mb-4 text-white">Sign Up</h2>
-        <form className="space-y-4 text-white" onSubmit={handleSignup}>
+      <div className="relative bg-white/20 backdrop-blur-md border border-white/30 rounded-xl p-8 max-w-md w-full shadow-lg">
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-white hover:text-gray-200 text-xl"
+        >
+          ✕
+        </button>
+
+        <h2 className="text-2xl font-bold mb-6 text-white text-center">
+          Sign Up
+        </h2>
+
+        <form className="space-y-4" onSubmit={handleSignup}>
           <input
-            type="text"
+            className="w-full p-2 rounded bg-white/10 text-white placeholder-white/70 border border-white/40"
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full border border-white/40 rounded p-2 bg-white/10 text-white placeholder-white/70"
             required
           />
           <input
-            type="email"
+            className="w-full p-2 rounded bg-white/10 text-white placeholder-white/70 border border-white/40"
             placeholder="Email"
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-white/40 rounded p-2 bg-white/10 text-white placeholder-white/70"
             required
           />
           <input
-            type="password"
+            className="w-full p-2 rounded bg-white/10 text-white placeholder-white/70 border border-white/40"
             placeholder="Password"
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-white/40 rounded p-2 bg-white/10 text-white placeholder-white/70"
             required
           />
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition font-medium"
-            disabled={loading}
+            className="w-full py-2 bg-blue-600 hover:bg-blue-700 transition text-white rounded font-medium"
           >
-            {loading ? "Signing Up..." : "Create Account"}
+            Create Account
           </button>
         </form>
 
-        {/* Already have an account link */}
         <p className="mt-4 text-center text-white/80">
           Already have an account?{" "}
           <span
-            onClick={() => {
-              onClose();
-              openLogin();
-            }}
+            onClick={switchToLogin}
             className="text-blue-400 hover:underline cursor-pointer"
           >
             Login
           </span>
         </p>
-
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 text-white/80 hover:text-white text-xl font-bold"
-        >
-          ✕
-        </button>
       </div>
     </div>
   );
 }
-
-export default SignupModal;
