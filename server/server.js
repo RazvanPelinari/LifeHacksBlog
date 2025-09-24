@@ -11,10 +11,7 @@ app.use(express.json());
 
 // MongoDB connection
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO_URI) // clean, no deprecated options
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.error(err));
 
@@ -40,7 +37,6 @@ app.post("/posts", async (req, res) => {
   res.json(newPost);
 });
 
-// Fix: Use _id instead of id
 app.get("/posts/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -53,6 +49,6 @@ app.get("/posts/:id", async (req, res) => {
   }
 });
 
-// Start server
+// Use Railway-provided port or default to 5000
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
