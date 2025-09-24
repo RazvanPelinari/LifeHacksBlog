@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "title": "What Chess Teaches About Time Management",
+    "date": "2025-09-24",
+    "category": "Life Lessons",
+    "content": "Chess can teach you how to plan ahead, think strategically, and anticipate your opponent's moves. Applying these lessons to work or personal projects can improve efficiency and foresight."
+  },
+  {
+    "id": 2,
+    "title": "Productivity Lessons from Ants",
+    "date": "2025-09-22",
+    "category": "Productivity",
+    "content": "Ant colonies are masters of organization. They divide tasks efficiently, communicate effectively, and adapt quickly. Studying their behavior can inspire smarter task management in our own lives."
+  },
+  {
+    "id": 3,
+    "title": "Negotiation Tips from Classic Movies",
+    "date": "2025-09-20",
+    "category": "Communication",
+    "content": "Some of the best negotiation scenes in movies reveal key principles: patience, listening more than speaking, and knowing your leverage. Learn how to apply cinematic tactics to real-world situations."
+  },
+  {
+    "id": 4,
+    "title": "Minimalism Lessons from Ancient Civilizations",
+    "date": "2025-09-18",
+    "category": "Lifestyle",
+    "content": "Ancient societies often lived with less, focusing on essentials for survival and community. We can take inspiration from their minimalism to reduce clutter and improve focus in modern life."
+  },
+  {
+    "id": 5,
+    "title": "Coding Principles Applied to Everyday Decisions",
+    "date": "2025-09-16",
+    "category": "Tech & Life",
+    "content": "Just like writing clean code, life can benefit from clear planning, modular approaches, and iterative improvement. Applying these programming principles can make complex decisions simpler and more structured."
+  }
+]
