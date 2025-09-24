@@ -112,18 +112,31 @@ function Navbar({ user, setUser }) {
                 </div>
               )}
             </div>
-
-            {/* Mobile Menu omitted for brevity */}
           </div>
         </div>
       </div>
 
       {/* Modals */}
       {isSignupOpen && (
-        <SignupModal onClose={() => setIsSignupOpen(false)} setUser={setUser} />
+        <SignupModal
+          setIsOpen={setIsSignupOpen}
+          setUser={setUser}
+          openLogin={() => {
+            setIsSignupOpen(false);
+            setIsLoginOpen(true);
+          }}
+        />
       )}
+
       {isLoginOpen && (
-        <LoginModal onClose={() => setIsLoginOpen(false)} setUser={setUser} />
+        <LoginModal
+          setIsOpen={setIsLoginOpen}
+          setUser={setUser}
+          openSignup={() => {
+            setIsLoginOpen(false);
+            setIsSignupOpen(true);
+          }}
+        />
       )}
     </nav>
   );
