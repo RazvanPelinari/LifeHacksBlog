@@ -14,7 +14,7 @@ function Navbar({ user, setUser }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token && !user) {
-      fetch(`${backendURL}/me`, {
+      fetch(`${backendURL}/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => res.json())
