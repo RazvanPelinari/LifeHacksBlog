@@ -2,16 +2,29 @@ import { useEffect, useState } from "react";
 import BlogList from "../components/BlogList";
 import NewPostModal from "../components/NewPostModal";
 
+const backendURL = "https://lifehacksblog-production.up.railway.app";
+
 function Home() {
   const [posts, setPosts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Simulated user state: null = not logged in, object = logged in
-  const [user, setUser] = useState(null); // Replace with actual auth later
+  // User state
+  const [user, setUser] = useState(null);
 
-  const backendURL = "https://lifehacksblog-production.up.railway.app";
+  // Check if user is logged in on app load
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch(`${backendURL}/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => res.json())
+        .then((data) => setUser(data.user))
+        .catch(() => setUser(null));
+    }
+  }, []);
 
   // Fetch posts
   useEffect(() => {
@@ -34,9 +47,13 @@ function Home() {
     }
 
     try {
+      const token = localStorage.getItem("token");
       const res = await fetch(`${backendURL}/posts`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(newPost),
       });
       const savedPost = await res.json();
@@ -108,7 +125,10 @@ function Home() {
           +
         </button>
       ) : (
-        <p className="fixed bottom-6 right-6 bg-red-500 text-white px-4 py-2 rounded shadow-lg z-50">
+        <p
+          onClick={() => alert("Login to create a post")}
+          className="fixed bottom-6 right-6 bg-red-500 text-white px-4 py-2 rounded shadow-lg z-50 cursor-pointer hover:bg-red-600 transition"
+        >
           Login to create a post
         </p>
       )}
