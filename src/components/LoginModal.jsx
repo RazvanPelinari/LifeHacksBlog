@@ -20,7 +20,7 @@ export default function LoginModal({ onClose, setUser, switchToSignup }) {
       if (res.ok) {
         setUser(data.user);
         localStorage.setItem("token", data.token);
-        onClose();
+        onClose(); // close modal on success
       } else {
         alert(data.message || "Login failed");
       }
@@ -33,6 +33,7 @@ export default function LoginModal({ onClose, setUser, switchToSignup }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
       <div className="relative bg-white/20 backdrop-blur-md border border-white/30 rounded-xl p-8 max-w-md w-full shadow-lg">
+        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-white hover:text-gray-200 text-xl"
