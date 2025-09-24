@@ -2,7 +2,6 @@ import express from "express";
 import Post from "../models/Post.js";
 
 const router = express.Router();
-const { title, content, author } = req.body;
 
 // Get all posts
 router.get("/", async (req, res) => {
@@ -16,8 +15,6 @@ router.get("/", async (req, res) => {
 });
 
 // Create new post
-
-const newPost = new Post({ title, content, author });
 router.post("/", async (req, res) => {
   try {
     const newPost = new Post(req.body);
