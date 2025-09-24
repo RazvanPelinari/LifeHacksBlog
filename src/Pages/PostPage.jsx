@@ -9,7 +9,7 @@ function PostPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/posts/${id}`)
+    fetch(`$https://lifehacksblog-production.up.railway.app/posts/${id}`)
       .then((res) => res.json())
       .then((data) => setPost(data))
       .catch((err) => console.error("Failed to fetch post:", err));

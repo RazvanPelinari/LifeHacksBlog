@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import BlogList from "../components/BlogList";
 import NewPostModal from "../components/NewPostModal";
-import "../../.env";
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -10,7 +9,7 @@ function Home() {
 
   // Fetch posts from Railway backend
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/posts`)
+    fetch(`$https://lifehacksblog-production.up.railway.app/posts`)
       .then((res) => res.json())
       .then((data) => setPosts(data))
       .catch((err) => console.error("Failed to fetch posts:", err));
@@ -18,7 +17,7 @@ function Home() {
 
   const addPost = async (newPost) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/posts`, {
+      const res = await fetch(`$https://lifehacksblog-production.up.railway.app/posts`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newPost),
