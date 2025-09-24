@@ -202,9 +202,9 @@ function Navbar({ user, setUser }) {
       {/* Modals */}
       {isSignupOpen && (
         <SignupModal
-          setIsOpen={setIsSignupOpen}
+          onClose={() => setIsSignupOpen(false)}
           setUser={setUser}
-          openLogin={() => {
+          switchToLogin={() => {
             setIsSignupOpen(false);
             setIsLoginOpen(true);
           }}
@@ -213,9 +213,9 @@ function Navbar({ user, setUser }) {
 
       {isLoginOpen && (
         <LoginModal
-          setIsOpen={setIsLoginOpen}
+          onClose={() => setIsLoginOpen(false)}
           setUser={setUser}
-          openSignup={() => {
+          switchToSignup={() => {
             setIsLoginOpen(false);
             setIsSignupOpen(true);
           }}
