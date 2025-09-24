@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import authRoutes from "./routes/auth.js";
 
 dotenv.config();
 
@@ -36,6 +37,8 @@ const postSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 const Post = mongoose.model("Post", postSchema);
+
+app.use("/auth", authRoutes);
 
 // -------------------- Auth Routes --------------------
 
