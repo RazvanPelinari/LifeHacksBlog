@@ -8,9 +8,12 @@ function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  // Simulated user state: null = not logged in, object = logged in
+  const [user, setUser] = useState(null); // Replace with actual auth later
+
   const backendURL = "https://lifehacksblog-production.up.railway.app";
 
-  // Fetch posts from Railway backend
+  // Fetch posts
   useEffect(() => {
     fetch(`${backendURL}/posts`)
       .then((res) => res.json())
@@ -25,6 +28,11 @@ function Home() {
   }, []);
 
   const addPost = async (newPost) => {
+    if (!user) {
+      alert("You must be logged in to create a post!");
+      return;
+    }
+
     try {
       const res = await fetch(`${backendURL}/posts`, {
         method: "POST",
@@ -33,6 +41,7 @@ function Home() {
       });
       const savedPost = await res.json();
       setPosts([savedPost, ...posts]);
+      setIsModalOpen(false);
     } catch (err) {
       console.error("Failed to add post:", err);
     }
@@ -91,12 +100,18 @@ function Home() {
       </section>
 
       {/* Floating + Button */}
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="fixed bottom-6 right-6 bg-blue-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-lg hover:bg-blue-700 transition z-50"
-      >
-        +
-      </button>
+      {user ? (
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="fixed bottom-6 right-6 bg-blue-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-lg hover:bg-blue-700 transition z-50"
+        >
+          +
+        </button>
+      ) : (
+        <p className="fixed bottom-6 right-6 bg-red-500 text-white px-4 py-2 rounded shadow-lg z-50">
+          Login to create a post
+        </p>
+      )}
 
       {/* New Post Modal */}
       <NewPostModal
