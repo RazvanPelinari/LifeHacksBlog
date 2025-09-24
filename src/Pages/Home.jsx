@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import BlogList from "../components/BlogList";
 import NewPostModal from "../components/NewPostModal";
+import "../../.env";
 
 function Home() {
   const [posts, setPosts] = useState([]);
