@@ -6,18 +6,27 @@ function Home() {
   const [posts, setPosts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const backendURL = "https://lifehacksblog-production.up.railway.app";
 
   // Fetch posts from Railway backend
   useEffect(() => {
-    fetch(`$https://lifehacksblog-production.up.railway.app/posts`)
+    fetch(`${backendURL}/posts`)
       .then((res) => res.json())
-      .then((data) => setPosts(data))
-      .catch((err) => console.error("Failed to fetch posts:", err));
+      .then((data) => {
+        setPosts(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch posts:", err);
+        setLoading(false);
+      });
   }, []);
 
   const addPost = async (newPost) => {
     try {
-      const res = await fetch(`$https://lifehacksblog-production.up.railway.app/posts`, {
+      const res = await fetch(`${backendURL}/posts`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newPost),
@@ -34,6 +43,14 @@ function Home() {
     selectedCategory === "All"
       ? posts
       : posts.filter((p) => p.category === selectedCategory);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-gray-500">
+        Loading posts...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 relative">

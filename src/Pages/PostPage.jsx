@@ -1,4 +1,3 @@
-// src/pages/PostPage.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
@@ -9,10 +8,16 @@ function PostPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`$https://lifehacksblog-production.up.railway.app/posts/${id}`)
+    fetch(`https://lifehacksblog-production.up.railway.app/posts/${id}`)
       .then((res) => res.json())
-      .then((data) => setPost(data))
-      .catch((err) => console.error("Failed to fetch post:", err));
+      .then((data) => {
+        setPost(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch post:", err);
+        setLoading(false);
+      });
   }, [id]);
 
   if (loading) {
@@ -23,7 +28,7 @@ function PostPage() {
     );
   }
 
-  if (!post) {
+  if (!post || post.message === "Post not found") {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen text-center p-6">
         <p className="text-gray-500 text-lg mb-4">Post not found.</p>
@@ -39,13 +44,11 @@ function PostPage() {
 
   return (
     <div className="max-w-3xl mx-auto p-6">
-      {/* Title */}
       <h1 className="text-4xl md:text-5xl font-bold mb-4">{post.title}</h1>
       <p className="text-gray-500 mb-6">
         {new Date(post.date).toLocaleDateString()}
       </p>
 
-      {/* Markdown Content */}
       <div className="prose prose-lg max-w-full">
         <ReactMarkdown
           components={{
@@ -68,7 +71,6 @@ function PostPage() {
         </ReactMarkdown>
       </div>
 
-      {/* Back Link */}
       <Link
         to="/"
         className="inline-block mt-8 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
