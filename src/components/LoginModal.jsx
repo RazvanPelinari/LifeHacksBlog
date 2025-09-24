@@ -17,7 +17,7 @@ export default function LoginModal({ onClose, setUser, switchToSignup }) {
         }
       );
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Login failed");
+      if (!res.ok) throw new Error(data.message || "Login failed");
 
       localStorage.setItem("token", data.token);
       setUser(data.user);

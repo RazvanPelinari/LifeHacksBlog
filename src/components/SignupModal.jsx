@@ -18,7 +18,7 @@ export default function SignupModal({ onClose, setUser, switchToLogin }) {
         }
       );
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Signup failed");
+      if (!res.ok) throw new Error(data.message || "Signup failed");
 
       localStorage.setItem("token", data.token);
       setUser(data.user);

@@ -38,11 +38,9 @@ function Navbar({ user, setUser }) {
 
   return (
     <nav className="sticky top-0 z-50">
-      {/* Top nav */}
       <div className="backdrop-blur-md bg-white/30 border-b border-white/20 shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
-            {/* Logo */}
             <div className="flex items-center space-x-6">
               <div className="text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 LifeHacksBlog
@@ -86,7 +84,6 @@ function Navbar({ user, setUser }) {
                     {user.username ? user.username[0].toUpperCase() : "U"}
                   </button>
 
-                  {/* Profile Dropdown */}
                   {isProfileOpen && (
                     <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg py-2 text-gray-800 z-50">
                       <a
