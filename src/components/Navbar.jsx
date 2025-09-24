@@ -38,6 +38,20 @@ function Navbar() {
                   {link.name}
                 </Link>
               ))}
+
+              {/* Sign Up / Login Buttons */}
+              <Link
+                to="/signup"
+                className="px-4 py-1 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition font-medium"
+              >
+                Sign Up
+              </Link>
+              <Link
+                to="/login"
+                className="px-4 py-1 rounded-full border border-blue-600 text-blue-600 hover:bg-blue-100 transition font-medium"
+              >
+                Login
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -94,6 +108,22 @@ function Navbar() {
               {link.name}
             </Link>
           ))}
+
+          {/* Sign Up / Login Buttons */}
+          <Link
+            to="/signup"
+            className="block px-3 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition font-medium"
+            onClick={() => setIsOpen(false)}
+          >
+            Sign Up
+          </Link>
+          <Link
+            to="/login"
+            className="block px-3 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-100 transition font-medium"
+            onClick={() => setIsOpen(false)}
+          >
+            Login
+          </Link>
         </div>
       )}
     </nav>
