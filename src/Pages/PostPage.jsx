@@ -9,13 +9,10 @@ function PostPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/posts/${id}`)
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/posts/${id}`)
       .then((res) => res.json())
-      .then((data) => {
-        setPost(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      .then((data) => setPost(data))
+      .catch((err) => console.error("Failed to fetch post:", err));
   }, [id]);
 
   if (loading) {
