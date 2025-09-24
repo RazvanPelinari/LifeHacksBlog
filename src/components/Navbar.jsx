@@ -131,7 +131,7 @@ function Navbar() {
 
       {/* Sign Up Modal */}
       {isSignupOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
           <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-8 max-w-md w-full relative shadow-lg">
             <h2 className="text-2xl font-bold mb-4 text-white">Sign Up</h2>
             <form className="space-y-4 text-white">
@@ -177,7 +177,7 @@ function Navbar() {
 
       {/* Login Modal */}
       {isLoginOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
           <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-8 max-w-md w-full relative shadow-lg">
             <h2 className="text-2xl font-bold mb-4 text-white">Login</h2>
             <form className="space-y-4 text-white">
